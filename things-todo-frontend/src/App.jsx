@@ -1,20 +1,12 @@
-import { ListTasks } from './components/ListTasks'
+import { Button } from '@mui/material';
+import ListTasks from './components/ListTasks';
 
 const App = () => {
   return (
     <div>
       <h1>Things Todo</h1>
+      <Button variant="outlined">New task</Button>
       <ListTasks />
-      {/* <div */}
-      {/*   style={{ */}
-      {/*     height: '100vh', */}
-      {/*     display: 'flex', */}
-      {/*     alignItems: 'center', */}
-      {/*     justifyContent: 'center', */}
-      {/*     flexDirection: 'column', */}
-      {/*   }} */}
-      {/* > */}
-      {/* </div> */}
     </div>
   );
 };
