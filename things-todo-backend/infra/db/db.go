@@ -3,18 +3,30 @@ package db
 import (
 	"fmt"
 
+	"github.com/KKogaa/things-todo-backend/infra/repositories"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-var Gorm *gorm.DB
-
-func Init() error {
+func Init() (*gorm.DB, error) {
 	db, err := connect()
 	if err != nil {
+		return nil, err
+	}
+
+	err = autoMigrate(db)
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
+
+func autoMigrate(db *gorm.DB) error {
+	if err := db.AutoMigrate(&repositories.Task{}); err != nil {
 		return err
 	}
-	Gorm = db
+
 	return nil
 }
 

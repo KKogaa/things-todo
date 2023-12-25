@@ -21,9 +21,12 @@ const (
 type Priority int8
 
 type Task struct {
-	Difficulty Difficulty
-	Duration   time.Duration
-	Priority   Priority
+	Id          uint          `json:"id"`
+	Title       string        `json:"title"`
+	Description string        `json:"description"`
+	Difficulty  Difficulty    `json:"difficulty"`
+	Duration    time.Duration `json:"duration"`
+	Priority    Priority      `json:"priority"`
 }
 
 func NewTask(duration time.Duration, difficulty Difficulty,

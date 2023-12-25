@@ -8,6 +8,10 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/KKogaa/things-todo-backend/infra/db"
+	"github.com/KKogaa/things-todo-backend/infra/handlers"
+	"github.com/KKogaa/things-todo-backend/infra/repositories"
+	"github.com/KKogaa/things-todo-backend/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,9 +22,31 @@ func NewServer() *Server {
 	return &Server{}
 }
 
+func Wire(server *gin.Engine) {
+	db, err := db.Init()
+	if err != nil {
+		log.Fatalf("error establishing db connection: %s", err)
+
+	}
+
+	// TODO: change to uber fx dependency injection
+	taskRepo := repositories.NewTaskRepository(db)
+	taskService := services.NewTaskService(taskRepo)
+	taskHandler := handlers.NewTaskHandlers(taskService)
+
+	taskGroup := server.Group("/tasks")
+	taskGroup.GET("", taskHandler.HandleListTasks)
+	taskGroup.GET("/:taskId", taskHandler.HandleGetTask)
+	taskGroup.POST("", taskHandler.HandleCreateTask)
+	taskGroup.PUT("/:taskId", taskHandler.HandleUpdateTask)
+	taskGroup.DELETE("/:taskId", taskHandler.HandleDeleteTask)
+
+}
+
 func (s *Server) Start() {
 	instance := gin.New()
 	instance.Use(gin.Recovery())
+	Wire(instance)
 
 	srv := &http.Server{
 		Addr:    ":" + "8080",
@@ -37,8 +63,8 @@ func (s *Server) Start() {
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
-	log.Println("Shutting down server...")
 	<-quit
+	log.Println("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

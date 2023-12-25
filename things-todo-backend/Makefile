@@ -2,7 +2,7 @@ test:
 	go test ./... -v
 
 run:
-	go run cmd/api/main.go
+	go run .
 
 migrate:
 	go run cmd/migrate/main.go
