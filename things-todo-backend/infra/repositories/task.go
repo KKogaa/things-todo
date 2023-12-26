@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"log"
 	"time"
 
 	"github.com/KKogaa/things-todo-backend/core/entity"
@@ -85,7 +84,7 @@ func (t TaskRepository) CreateTask(task entity.Task) (entity.Task, error) {
 
 func (t TaskRepository) GetTask(taskId uint) (entity.Task, error) {
 	var task Task
-	if err := t.db.Find(&task, taskId).Error; err != nil {
+	if err := t.db.Where("id = ?", taskId).First(&task).Error; err != nil {
 		return entity.Task{}, err
 	}
 	return modelToEntity(task), nil
