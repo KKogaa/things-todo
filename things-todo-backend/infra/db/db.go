@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/KKogaa/things-todo-backend/infra/repositories"
+	"github.com/KKogaa/things-todo-backend/infra/adapters/repositories"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

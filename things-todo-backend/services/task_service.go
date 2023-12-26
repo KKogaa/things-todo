@@ -4,14 +4,14 @@ import (
 	"time"
 
 	"github.com/KKogaa/things-todo-backend/core/entity"
-	"github.com/KKogaa/things-todo-backend/services/adapters"
+	"github.com/KKogaa/things-todo-backend/services/ports"
 )
 
 type TaskService struct {
-	taskRepo adapters.TaskRepository
+	taskRepo ports.TaskRepository
 }
 
-func NewTaskService(taskRepo adapters.TaskRepository) TaskService {
+func NewTaskService(taskRepo ports.TaskRepository) TaskService {
 	return TaskService{taskRepo: taskRepo}
 }
 

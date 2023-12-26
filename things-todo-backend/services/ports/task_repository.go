@@ -1,4 +1,4 @@
-package adapters
+package ports
 
 import "github.com/KKogaa/things-todo-backend/core/entity"
 

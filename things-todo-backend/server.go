@@ -8,9 +8,9 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/KKogaa/things-todo-backend/infra/adapters/repositories"
 	"github.com/KKogaa/things-todo-backend/infra/db"
 	"github.com/KKogaa/things-todo-backend/infra/handlers"
-	"github.com/KKogaa/things-todo-backend/infra/repositories"
 	"github.com/KKogaa/things-todo-backend/services"
 	"github.com/gin-gonic/gin"
 )
